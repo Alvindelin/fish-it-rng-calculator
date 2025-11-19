@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-4087950017586401">
+    <title>Fish It RNG Calculator - Get Secret & Mythic Fish Easy | Roblox Guide 2024</title>
+    <meta name="description" content="🎣 FREE Fish It RNG Calculator for Roblox! Calculate best respawn timing to catch Secret fish like Element Rod, Ghostfinn, Bamboo Rod. Complete rod tier list, best enchants (Leprechaun II, Mutation Hunter), and strategy tips to get legendary & mythic fish fast!">
+    <meta name="keywords" content="fish it calculator, fish it rng calculator, roblox fish it, fish it guide, secret fish guide, mythic fish guide, element rod fish it, ares rod guide, bamboo rod fish it, ghostfinn rod, angler rod, fish it enchants, leprechaun 2 enchant, mutation hunter enchant, cursed enchant, empowered enchant, fish it tips, fish it tricks, how to get secret fish, how to get element rod, fish it respawn calculator, fish it legendary fish, fish it mitos, fish it legend, fish it gamepass rod, fish it best rod, fish it tier list, prismatic enchant, gold digger enchant, big hunter enchant, fish it strategy, fish it farming guide, fish it 2024, fish it update, roblox fishing game, fishing simulator roblox, best fishing rod roblox, fish it codes, fish it wiki, fish it discord">
+    <meta name="author" content="MONSAL">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://fish-it-rng-calculator.vercel.app/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fish-it-rng-calculator.vercel.app/">
+    <meta property="og:title" content="Fish It RNG Calculator - Roblox Secret Fish Guide">
+    <meta property="og:description" content="Calculate RNG patterns & get Secret fish in Roblox Fish It! Free calculator with rod tier list & enchant combinations.">
+    <meta property="og:image" content="https://fish-it-rng-calculator.vercel.app/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://fish-it-rng-calculator.vercel.app/">
+    <meta property="twitter:title" content="Fish It RNG Calculator - Roblox Guide">
+    <meta property="twitter:description" content="Free Fish It RNG Calculator for catching Secret & Mythic fish in Roblox!">
+    <meta property="twitter:image" content="https://fish-it-rng-calculator.vercel.app/og-image.png">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4087950017586401"
+     crossorigin="anonymous"></script>
+    
+    <!-- PropellerAds Display Ads -->
+    <script src="https://fpyf8.com/88/tag.min.js" data-zone="185731" async data-cfasync="false"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sticky Top Nav -->
+        <nav class="topnav">
+            <a href="#calc">Calculator</a>
+            <a href="#rods">Rods</a>
+            <a href="#enchants">Enchants</a>
+            <a href="#tips">Tips</a>
+            <a href="#patterns">RNG Pattern</a>
+            <a href="#codes">Codes</a>
+        </nav>
+        <header>
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="changeLanguage('id')" data-lang="id">🇮🇩 ID</button>
+                <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">🇬🇧 EN</button>
+                <button class="lang-btn" onclick="changeLanguage('es')" data-lang="es">🇪🇸 ES</button>
+                <button class="lang-btn" onclick="changeLanguage('pt')" data-lang="pt">🇧🇷 PT</button>
+            </div>
+            <h1 data-i18n="header.title">🎣 KALKULATOR RNG FISH IT</h1>
+            <p class="subtitle" data-i18n="header.subtitle">Hitung kapan harus respawn untuk dapet Secret!</p>
+        </header>
+
+        <div id="calc" class="card">
+            <h2 data-i18n="input.title">📊 Input Data</h2>
+            <div class="form-group">
+                <label for="currentFish" data-i18n="input.currentFish">Jumlah Ikan Sekarang:</label>
+                <input type="number" id="currentFish" data-i18n-placeholder="input.currentFishPlaceholder" placeholder="Contoh: 1250" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="legendCount" data-i18n="input.legendCount">Jumlah Legend Saat Ini:</label>
+                <input type="number" id="legendCount" data-i18n-placeholder="input.legendPlaceholder" placeholder="Contoh: 2" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="mitosCount" data-i18n="input.mitosCount">Jumlah Mitos Saat Ini:</label>
+                <input type="number" id="mitosCount" data-i18n-placeholder="input.mitosPlaceholder" placeholder="Contoh: 1" min="0">
+            </div>
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn-calculate" onclick="calculate()" data-i18n="input.calculate">Hitung RNG Strategy</button>
+                <button id="save-setup" class="btn-secondary">Save Setup</button>
+                <button id="show-saved" class="btn-secondary">Saved Setups</button>
+                <button id="share-setup" class="btn-secondary">Share</button>
+                <button id="feedback-btn" class="btn-secondary">Feedback</button>
+                <label style="display:flex; align-items:center; gap:6px;">
+                    <input type="checkbox" id="beta-toggle"> <small>Beta: Simulate</small>
+                </label>
+            </div>
+            <div id="predict-panel" class="card small" style="margin-top:8px; padding:10px; display:block;">
+                <strong>Phase Probability</strong>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; align-items:center;">
+                    <div style="min-width:160px;"><small>Secret this phase</small><div id="prob-phase" style="font-weight:800; color: var(--primary);">-</div></div>
+                    <div style="min-width:160px;"><small>Secret before 4500</small><div id="prob-until" style="font-weight:800; color: var(--primary-2);">-</div></div>
+                    <div style="min-width:160px;"><small>Auto Suggestion</small><div id="auto-suggest" style="font-weight:800; color:var(--muted);">-</div></div>
+                </div>
+            </div>
+            <div id="savedList" class="card small hidden" style="margin-top:8px; padding:10px; display:none;"></div>
+            <div id="beta-panel" class="card hidden" style="display:none; margin-top:10px;">
+                <h3>Simulate RNG (Beta)</h3>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <label>Runs: <input id="sim-runs" type="number" value="500" min="100" step="100" style="width:100px; margin-left:6px;"></label>
+                    <button id="run-sim" class="btn-secondary">Run Simulation</button>
+                    <div id="sim-progress" style="color:var(--muted);"></div>
+                </div>
+                <div id="sim-results" style="margin-top:12px; color:var(--muted);"></div>
+                <canvas id="sim-chart" width="800" height="220" style="max-width:100%; margin-top:12px; height:220px;"></canvas>
+                <div style="margin-top:12px;">
+                    <button id="compare-btn" class="btn-secondary">Compare Saved Setups</button>
+                    <div id="compare-panel" class="card small hidden" style="display:none; margin-top:8px;">
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <select id="compare-left"></select>
+                            <select id="compare-right"></select>
+                            <button id="run-compare" class="btn-secondary">Run Compare</button>
+                        </div>
+                        <div id="compare-results" style="margin-top:10px; color:var(--muted);"></div>
+                        <canvas id="compare-chart" width="800" height="220" style="max-width:100%; margin-top:12px; height:220px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RNG Phase Monitor -->
+        <div id="phase-monitor" class="card" style="margin-top:10px;">
+            <h2>⏱️ RNG Phase Monitor</h2>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <button id="start-session" class="btn-secondary">Start Session</button>
+                <button id="mark-reset" class="btn-secondary">Mark Reset</button>
+                <button id="clear-session" class="btn-secondary">Clear</button>
+                <label style="display:flex; gap:6px; align-items:center;">
+                    <small>Cold</small>
+                    <input id="dur-cold" type="number" min="1" value="12" style="width:80px;"> <small>min</small>
+                </label>
+                <label style="display:flex; gap:6px; align-items:center;">
+                    <small>Warm</small>
+                    <input id="dur-warm" type="number" min="1" value="25" style="width:80px;"> <small>min</small>
+                </label>
+                <label style="display:flex; gap:6px; align-items:center;">
+                    <small>Hot</small>
+                    <input id="dur-hot" type="number" min="1" value="12" style="width:80px;"> <small>min</small>
+                </label>
+            </div>
+            <div style="margin-top:12px;">
+                <div id="session-duration" style="font-weight:800; color:var(--muted);">Session: —</div>
+                <div style="height:14px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border-radius: 8px; margin-top:10px; overflow:hidden;">
+                    <div id="phase-bar" style="display:flex; height:100%; width:100%;"></div>
+                </div>
+                <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                    <div style="min-width:180px;"><small>Current Phase</small><div id="phase-current" style="font-weight:800;">—</div></div>
+                    <div style="min-width:200px;"><small>Phase Tip</small><div id="phase-tip" style="font-weight:600; color:var(--muted);">—</div></div>
+                    <div style="min-width:200px;"><small>Elapsed</small><div id="phase-elapsed" style="font-weight:600; color:var(--muted);">—</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rods" class="card rod-card">
+            <h2>🎣 Rekomendasi Rod & Enchant</h2>
+            
+            <div class="rod-section">
+                <h3>🌟 Tier List Fishing Rods</h3>
+                <div class="rod-grid">
+                    <div class="rod-item best">
+                        <div class="rod-header">
+                            <span class="rod-icon">👑</span>
+                            <h4>SECRET TIER (Terbaik)</h4>
+                        </div>
+                        <ul>
+                            <li><strong>Element Rod</strong> - 1111% Luck, 130% Speed, 900.000kg | Quest: Ghostfinn + Secret di Ancient Jungle & Sacred Temple</li>
+                        </ul>
+                    </div>
+                    <div class="rod-item mythic">
+                        <div class="rod-header">
+                            <span class="rod-icon">💎</span>
+                            <h4>MYTHIC TIER</h4>
+                        </div>
+                        <ul>
+                            <li><strong>Bamboo Rod</strong> - 760% Luck, 98% Speed, 500.000kg | $12M di Sacred Temple</li>
+                            <li><strong>Ghostfinn Rod</strong> - 610% Luck, 118% Speed, 600.000kg | Quest Deep Sea</li>
+                            <li><strong>Angler Rod</strong> - 530% Luck, 71% Speed, 500.000kg | $8M di Lost Isle</li>
+                            <li><strong>Ares Rod</strong> - 455% Luck, 56% Speed, 400.000kg | $3M di Tropical Grove</li>
+                        </ul>
+                    </div>
+                    <div class="rod-item good">
+                        <div class="rod-header">
+                            <span class="rod-icon">⭐</span>
+                            <h4>LEGENDARY TIER</h4>
+                        </div>
+                        <ul>
+                            <li><strong>Hazmat Rod</strong> - 380% Luck, 32% Speed, 300.000kg | Traveling Merchant</li>
+                            <li><strong>Astral Rod</strong> - 350% Luck, 43% Speed, 350.000kg | $1M Rod Store</li>
+                            <li><strong>Fluorescent Rod</strong> - 300% Luck, 23% Speed, 160.000kg | $715K Rod Store</li>
+                        </ul>
+                    </div>
+                    <div class="rod-item epic">
+                        <div class="rod-header">
+                            <span class="rod-icon">🔥</span>
+                            <h4>EPIC TIER</h4>
+                        </div>
+                        <ul>
+                            <li><strong>Chrome Rod</strong> - 229% Luck, 23% Speed, 190.000kg | $437K</li>
+                            <li><strong>Steampunk Rod</strong> - 175% Luck, 19% Speed, 25.000kg | $215K</li>
+                        </ul>
+                    </div>
+                    <div class="rod-item starter">
+                        <div class="rod-header">
+                            <span class="rod-icon">🎯</span>
+                            <h4>GAMEPASS RODS</h4>
+                        </div>
+                        <ul>
+                            <li><strong>Angelic Rod</strong> - 180% Luck, 29% Speed, 75.000kg | Gamepass</li>
+                            <li><strong>Hyper Rod</strong> - 130% Luck, 13% Speed, 1.000kg | Gamepass</li>
+                            <li><strong>Gold Rod</strong> - 110% Luck, 7% Speed, 800kg | Gamepass</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="enchants" class="enchant-section">
+                <h3>✨ Enchant Terbaik</h3>
+                <div class="enchant-tabs">
+                    <button class="tab-btn active" onclick="showEnchantTab('single')">Single Enchant</button>
+                    <button class="tab-btn" onclick="showEnchantTab('double')">Double Enchant</button>
+                    <button class="tab-btn" onclick="showEnchantTab('combo')">Combo Terbaik</button>
+                </div>
+
+                <div id="single-enchant" class="enchant-content active">
+                    <h3 style="color: #ffd700; margin-bottom: 15px;">⭐ TIER S - Best for Secret Fish</h3>
+                    <div class="enchant-list">
+                        <div class="enchant-item legendary">
+                            <span class="enchant-badge">💎 TIER S</span>
+                            <h4>Leprechaun II</h4>
+                            <p>Menambah +100% luck secara keseluruhan, enchant terkuat untuk hunt Secret Fish</p>
+                            <span class="enchant-stat">+100% Luck</span>
+                        </div>
+                        <div class="enchant-item legendary">
+                            <span class="enchant-badge">💎 TIER S</span>
+                            <h4>Mutation Hunter II</h4>
+                            <p>Meningkatkan chance dapat ikan dengan mutation langka (Shiny, Gold, Albino)</p>
+                            <span class="enchant-stat">+60% Mutation Rate</span>
+                        </div>
+                        <div class="enchant-item legendary">
+                            <span class="enchant-badge">💎 TIER S</span>
+                            <h4>Cursed I</h4>
+                            <p>Enchant khusus untuk ikan Cursed, sangat langka dan mahal</p>
+                            <span class="enchant-stat">Special Effect</span>
+                        </div>
+                        <div class="enchant-item legendary">
+                            <span class="enchant-badge">💎 TIER S</span>
+                            <h4>Empowered I</h4>
+                            <p>Meningkatkan semua stats rod secara signifikan</p>
+                            <span class="enchant-stat">All Stats Boost</span>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #9c27b0; margin: 25px 0 15px 0;">⭐ TIER A - Very Good</h3>
+                    <div class="enchant-list">
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🔥 TIER A</span>
+                            <h4>Prismatic I</h4>
+                            <p>Meningkatkan chance dapat ikan dengan warna special</p>
+                            <span class="enchant-stat">+40% Color Variant</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🔥 TIER A</span>
+                            <h4>Leprechaun I</h4>
+                            <p>Menambah +50% luck, enchant paling populer untuk farming</p>
+                            <span class="enchant-stat">+50% Luck</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🔥 TIER A</span>
+                            <h4>Gold Digger I</h4>
+                            <p>10% chance dapat Gold Mutation - ikan termahal!</p>
+                            <span class="enchant-stat">+10% Gold Mutation</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🔥 TIER A</span>
+                            <h4>Big Hunter I</h4>
+                            <p>Ikan 10% lebih besar = harga jual lebih tinggi</p>
+                            <span class="enchant-stat">+10% Fish Size</span>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #2196f3; margin: 25px 0 15px 0;">⭐ TIER B - Good</h3>
+                    <div class="enchant-list">
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">✓ TIER B</span>
+                            <h4>Stargazer I</h4>
+                            <p>+60% luck di malam hari (best untuk Secret Fish farming malam)</p>
+                            <span class="enchant-stat">+60% Luck (Night)</span>
+                        </div>
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">✓ TIER B</span>
+                            <h4>Stormhunter I</h4>
+                            <p>+80% luck saat hujan - salah satu enchant terkuat untuk Secret Fish!</p>
+                            <span class="enchant-stat">+80% Luck (Rain)</span>
+                        </div>
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">✓ TIER B</span>
+                            <h4>Glistening I</h4>
+                            <p>Meningkatkan chance dapat ikan yang berkilau</p>
+                            <span class="enchant-stat">+Shiny Rate</span>
+                        </div>
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">✓ TIER B</span>
+                            <h4>Mutation Hunter I</h4>
+                            <p>Meningkatkan chance mutation (Shiny, Gold, Albino)</p>
+                            <span class="enchant-stat">+30% Mutation</span>
+                        </div>
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">✓ TIER B</span>
+                            <h4>XPerienced I</h4>
+                            <p>Dapat lebih banyak XP per tangkapan</p>
+                            <span class="enchant-stat">+25% XP</span>
+                        </div>
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">✓ TIER B</span>
+                            <h4>Reeler I</h4>
+                            <p>Mancing lebih cepat, grind lebih efisien</p>
+                            <span class="enchant-stat">+20% Speed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="double-enchant" class="enchant-content">
+                    <p style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #856404;">
+                        <strong>⚠️ Catatan:</strong> Double enchant hanya bisa dilakukan setelah kamu punya lebih dari 1 Secret Fish!
+                    </p>
+                    <div class="enchant-list">
+                        <div class="enchant-item legendary">
+                            <span class="enchant-badge">👑 GOD TIER</span>
+                            <h4>Leprechaun II + Mutation Hunter II</h4>
+                            <p>Combo terkuat! +100% Luck + Mutation boost = Secret & Mutation farming OP</p>
+                            <span class="enchant-stat">Ultimate Combo</span>
+                        </div>
+                        <div class="enchant-item legendary">
+                            <span class="enchant-badge">💎 BEST</span>
+                            <h4>Leprechaun II + Empowered I</h4>
+                            <p>Max luck + all stats boost = Kombo terbaik untuk hunt Secret</p>
+                            <span class="enchant-stat">Secret Hunter Build</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🔥 META</span>
+                            <h4>Leprechaun I + Gold Digger I</h4>
+                            <p>+50% Luck + Gold Mutation = Farming money & Secret sekaligus</p>
+                            <span class="enchant-stat">Money Maker</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🌟 STRONG</span>
+                            <h4>Leprechaun I + Big Hunter I</h4>
+                            <p>Luck boost + ikan lebih besar = Value tinggi per tangkapan</p>
+                            <span class="enchant-stat">Value Build</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🌙 NIGHT</span>
+                            <h4>Stargazer I + Leprechaun I</h4>
+                            <p>+60% (malam) +50% = +110% luck total di malam hari!</p>
+                            <span class="enchant-stat">Night Hunter</span>
+                        </div>
+                        <div class="enchant-item epic">
+                            <span class="enchant-badge">🌧️ RAIN</span>
+                            <h4>Stormhunter I + Leprechaun I</h4>
+                            <p>+80% (hujan) +50% = +130% luck saat hujan - INSANE!</p>
+                            <span class="enchant-stat">Storm Hunter</span>
+                        </div>
+                        <div class="enchant-item rare">
+                            <span class="enchant-badge">⚡ SPEED</span>
+                            <h4>Reeler I + Leprechaun I</h4>
+                            <p>Grind cepat dengan luck boost - efficient farming</p>
+                            <span class="enchant-stat">Speed Farming</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="combo-enchant" class="enchant-content">
+                    <div class="combo-recommendations">
+                        <div class="combo-box gold">
+                            <h4>👑 ARES ROD - Hunt Secret Fish (Best Build)</h4>
+                            <ul>
+                                <li><strong>Rod:</strong> Ares Rod (455% Luck, 56% Speed, 400.000kg)</li>
+                                <li><strong>Enchant Single:</strong> Stargazer I atau Stormhunter I</li>
+                                <li><strong>Enchant Double:</strong> Stormhunter I + Leprechaun I (130% luck saat hujan!)</li>
+                                <li><strong>Kapan:</strong> Mancing saat hujan untuk max luck</li>
+                                <li><strong>Lokasi:</strong> Server Privat - Ancient Jungle / Sacred Temple</li>
+                                <li><strong>Tips:</strong> Stargazer untuk malam (+60%), Stormhunter untuk hujan (+80%)</li>
+                            </ul>
+                        </div>
+                        <div class="combo-box gold">
+                            <h4>💰 ARES ROD - Farming Gold (Money Build)</h4>
+                            <ul>
+                                <li><strong>Rod:</strong> Ares Rod (455% Luck, 56% Speed)</li>
+                                <li><strong>Enchant Single:</strong> Gold Digger I (10% gold mutation)</li>
+                                <li><strong>Enchant Double:</strong> Gold Digger I + Leprechaun I</li>
+                                <li><strong>Alternative:</strong> Big Hunter I + Leprechaun I (ikan lebih besar = lebih mahal)</li>
+                                <li><strong>Lokasi:</strong> Lost Isle / Deep Sea (ikan mahal)</li>
+                                <li><strong>Tips:</strong> Jual ikan Gold Mutation untuk profit maksimal</li>
+                            </ul>
+                        </div>
+                        <div class="combo-box silver">
+                            <h4>💎 BAMBOO/GHOSTFINN ROD - Ultimate Secret Hunter</h4>
+                            <ul>
+                                <li><strong>Rod:</strong> Bamboo Rod (760% Luck) / Ghostfinn Rod (610% Luck)</li>
+                                <li><strong>Enchant:</strong> Leprechaun II + Mutation Hunter II (jika punya)</li>
+                                <li><strong>Alternative:</strong> Leprechaun I + Stormhunter I</li>
+                                <li><strong>Lokasi:</strong> Server Privat - Area dengan Secret Fish spawn</li>
+                                <li><strong>Strategy:</strong> Ikuti pola RNG Fase 1-3 di kalkulator</li>
+                            </ul>
+                        </div>
+                        <div class="combo-box silver">
+                            <h4>⭐ ASTRAL/HAZMAT ROD - Mid Game Setup</h4>
+                            <ul>
+                                <li><strong>Rod:</strong> Astral Rod (350% Luck) / Hazmat Rod (380% Luck)</li>
+                                <li><strong>Enchant:</strong> Leprechaun I (budget friendly)</li>
+                                <li><strong>Double:</strong> Leprechaun I + Reeler I (speed farming)</li>
+                                <li><strong>Lokasi:</strong> Tropical Grove / Lost Isle</li>
+                                <li><strong>Strategy:</strong> Grind sambil hunt rare fish</li>
+                            </ul>
+                        </div>
+                        <div class="combo-box bronze">
+                            <h4>🎯 EARLY GAME - Starter Setup</h4>
+                            <ul>
+                                <li><strong>Rod:</strong> Lucky Rod / Chrome Rod / Steampunk Rod</li>
+                                <li><strong>Enchant:</strong> Reeler I (fokus speed untuk grind money)</li>
+                                <li><strong>Lokasi:</strong> Pulau starter dengan ikan decent</li>
+                                <li><strong>Goal:</strong> Grind money sampai bisa beli Ares Rod ($3M)</li>
+                                <li><strong>Strategy:</strong> Jangan buang money untuk enchant mahal, save untuk rod!</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 5px solid #2196f3;">
+                        <h4 style="color: #1976d2; margin-bottom: 10px;">📊 Priority Upgrade Path:</h4>
+                        <ol style="color: #555; line-height: 2;">
+                            <li><strong>Rod</strong> - Upgrade ke Ares Rod minimal ($3M)</li>
+                            <li><strong>Enchant Tier A/S</strong> - Leprechaun I minimal</li>
+                            <li><strong>Location</strong> - Unlock area bagus (Ancient Jungle, Sacred Temple)</li>
+                            <li><strong>Double Enchant</strong> - Setelah punya 1+ Secret Fish</li>
+                            <li><strong>Element Rod</strong> - Final goal (Quest Ghostfinn Rod + Secret Fish)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tips" class="card tips-card">
+            <h2>💡 Tips & Tricks Pro</h2>
+            
+            <div class="tips-grid">
+                <div class=\"tip-item\">\n                    <span class=\"tip-icon\">🎣</span>\n                    <h4>Ares Rod adalah Rod Terbaik untuk Farming</h4>\n                    <p>Ares Rod ($3M) punya balance terbaik antara luck (455%), speed (56%), dan weight. Ini rod paling worth it sebelum Mythic tier!</p>\n                </div>
+                
+                <div class=\"tip-item\">\n                    <span class=\"tip-icon\">🌧️</span>\n                    <h4>Hunt Saat Hujan dengan Stormhunter</h4>\n                    <p>Stormhunter I memberi +80% luck saat hujan. Combo dengan Leprechaun I = +130% luck total! Tunggu hujan sebelum hunt Secret.</p>\n                </div>
+                
+                <div class=\"tip-item\">
+                    <span class=\"tip-icon\">🎯</span>
+                    <h4>Server Privat</h4>
+                    <p>Selalu pakai server privat saat hunt Secret! RNG caught pendapatan ikan ke-save lebih baik dan chance Secret naik.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">🔄</span>
+                    <h4>Respawn Tanpa Jual</h4>
+                    <p>JANGAN JUAL IKAN sebelum respawn! Langsung respawn aja biar RNG reset dengan baik.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">⏰</span>
+                    <h4>Timing Mancing</h4>
+                    <p>Mancing di waktu sepi server (malam/subuh) sering dapat rare lebih gampang karena RNG ga banyak yang pakai.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">📍</span>
+                    <h4>Lokasi Matters</h4>
+                    <p>Pulau berbeda punya pool ikan berbeda. Cari tahu pulau mana yang punya Secret yang kamu mau!</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">💰</span>
+                    <h4>Investment Prioritas</h4>
+                    <p>Upgrade rod dulu sebelum enchant. Rod bagus + enchant biasa > Rod biasa + enchant bagus.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">📊</span>
+                    <h4>Track Progress</h4>
+                    <p>Catat jumlah ikan, Legend, dan Mitos setiap sesi. Ini bantu kamu paham pola RNG kamu sendiri.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">🤝</span>
+                    <h4>Team Fishing</h4>
+                    <p>Mancing bareng temen di private server bisa share RNG luck. Tapi jangan terlalu banyak (max 3-4 orang).</p>
+                </div>
+                
+                <div class="tip-item">
+                    <span class="tip-icon">🎲</span>
+                    <h4>RNG Patience</h4>
+                    <p>Secret itu rare banget! Ga semua run bakal dapet. Tetap ikuti pola dan jangan frustrasi, pasti dapet!</p>
+                </div>
+            </div>
+            
+            <div class="danger-tips">
+                <h3>⚠️ Jangan Lakukan Ini!</h3>
+                <div class="danger-grid">
+                    <div class="danger-item">
+                        <span>❌</span>
+                        <p>Jual ikan sebelum respawn (bikin RNG rusak)</p>
+                    </div>
+                    <div class="danger-item">
+                        <span>❌</span>
+                        <p>AFK auto-fish (bisa kena ban + RNG jelek)</p>
+                    </div>
+                    <div class="danger-item">
+                        <span>❌</span>
+                        <p>Lanjut mancing setelah dapat 3 Legend di fase 1</p>
+                    </div>
+                    <div class="danger-item">
+                        <span>❌</span>
+                        <p>Mancing di public server rame saat hunt Secret</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="card results" style="display: none;">
+            <h2>📋 Hasil Analisis</h2>
+            <div id="currentPhase"></div>
+            <div id="recommendations"></div>
+        </div>
+
+        <div id="patterns" class="card info-card">
+            <h2>📖 Pola dan Trik RNG Fish It</h2>
+            
+            <div class="trick-section">
+                <h3>🎯 Trik Pertama (0-500 ikan)</h3>
+                <ul>
+                    <li><strong>Target:</strong> 1-2 Legend / 1 Mitos</li>
+                    <li><strong>Tindakan:</strong> Kalau 3× Legend → RNG "overheat" → <strong>respawn</strong> (jangan jual ikan)</li>
+                    <li><strong>Strategi:</strong> Ketika pendapatan ikan mencapai 500 ikan dan mendapatkan 3 legend, harus respawn</li>
+                </ul>
+            </div>
+
+            <div class="trick-section">
+                <h3>🎯 Trik Kedua (500-1500 ikan)</h3>
+                <ul>
+                    <li><strong>Target:</strong> 1 Mitos</li>
+                    <li><strong>Tindakan:</strong> Kalau tidak dapat mitos → <strong>respawn</strong>, dan legend bertambah (spam) jadi 3 → <strong>respawn</strong></li>
+                    <li><strong>Strategi:</strong> Usahakan mendapatkan ikan mitos minimal 1, ketika tidak dapat mitos sama sekali harus respawn</li>
+                </ul>
+            </div>
+
+            <div class="trick-section">
+                <h3>🎯 Trik Ketiga (1500-4500 ikan)</h3>
+                <ul>
+                    <li><strong>Target:</strong> Secret</li>
+                    <li><strong>Tindakan:</strong> Kalau sudah ada Mitos Legend → lanjut sampai Secret muncul atau auto reset. Tapi kalau dari 2500-3500 hanya muncul Legend tanpa Mitos → <strong>respawn sebelum 4000</strong> biar RNG tidak beku</li>
+                    <li><strong>Strategi:</strong> Di fase ini kalian sudah punya mitos dan legend. Fase dimana harus secret muncul</li>
+                </ul>
+            </div>
+
+            <div class="notes">
+                <h3>⚠️ Catatan Penting:</h3>
+                <ol>
+                    <li>Usahakan di server privat agar RNG caught pendapatan ikan ke save di pulau tempat kita mancing kemungkinan dapat secret bertambah.</li>
+                    <li>Hanya respawn tanpa menjual ikan.</li>
+                    <li>Ini hanya trik dan ga memastikan dapat.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- SEO Content Section -->
+        <div class="card" style="margin-top: 30px;">
+            <h2>🌟 About Fish It RNG Calculator</h2>
+            <p style="line-height: 1.8; color: #333; margin-bottom: 15px;">
+                Welcome to the ultimate <strong>Fish It RNG Calculator</strong> for Roblox! Our free calculator helps you understand RNG patterns and optimize your fishing strategy to catch rare fish including Secret, Mythic, and Legendary tiers. Whether you're hunting for the <strong>Element Rod</strong>, <strong>Ghostfinn Rod</strong>, <strong>Bamboo Rod</strong>, or <strong>Ares Rod</strong>, this tool calculates the best respawn timing based on your current fish count.
+            </p>
+            <p style="line-height: 1.8; color: #333; margin-bottom: 15px;">
+                <strong>How to Get Secret Fish:</strong> The key to catching secret fish in Fish It is understanding the RNG phases. After catching 500-1500 fish, your RNG enters Phase 2 where legendary fish become more common. At 1500-4500 fish, you enter Phase 3 with increased mythic spawn rates. Beyond 4500 fish (Phase 4), secret fish like Element Rod have the highest spawn probability. Use our calculator to track your progress and know exactly when to respawn for maximum efficiency!
+            </p>
+            <h3 style="margin-top: 25px;">🎣 Best Fishing Rods in Fish It</h3>
+            <p style="line-height: 1.8; color: #333; margin-bottom: 15px;">
+                Our comprehensive <strong>rod tier list</strong> ranks all fishing rods from Common to Secret tier. The <strong>Element Rod</strong> (Secret tier) is the rarest and most powerful, followed by mythic rods: <strong>Bamboo Rod</strong> (best for beginners), <strong>Ghostfinn Rod</strong> (ghost island exclusive), <strong>Angler Rod</strong> (deep sea fishing), and <strong>Ares Rod</strong> (PvP combat). Each rod has unique stats for Lure Speed, Luck, Resilience, and Max KG capacity.
+            </p>
+            <h3 style="margin-top: 25px;">✨ Best Enchants for Secret Fish Hunting</h3>
+            <p style="line-height: 1.8; color: #333; margin-bottom: 15px;">
+                Maximize your catch rate with <strong>Tier S enchants</strong>: <strong>Leprechaun II</strong> (2x Luck boost), <strong>Mutation Hunter II</strong> (mythic spawn rate +50%), <strong>Cursed I</strong> (rare fish attraction), and <strong>Empowered I</strong> (strength bonus). <strong>Tier A enchants</strong> like <strong>Prismatic I</strong>, <strong>Gold Digger I</strong>, and <strong>Big Hunter I</strong> are excellent alternatives. Combine enchants strategically based on your fishing phase!
+            </p>
+            <h3 style="margin-top: 25px;">📊 Fish It Strategy & Tips</h3>
+            <ul style="line-height: 2; color: #333; margin-left: 20px; margin-bottom: 15px;">
+                <li><strong>Private Server Strategy:</strong> Fish in private servers to preserve your RNG progress without interference</li>
+                <li><strong>Don't Sell Fish:</strong> Selling resets certain RNG counters - only respawn to refresh spawns</li>
+                <li><strong>Track Your Progress:</strong> Use our calculator to monitor which RNG phase you're in</li>
+                <li><strong>Location Matters:</strong> Different islands have different spawn pools - choose wisely!</li>
+                <li><strong>Event Fish:</strong> Special events introduce limited-time secret fish with unique mechanics</li>
+                <li><strong>Rod Upgrades:</strong> Invest in rod upgrades to increase base stats before hunting secrets</li>
+            </ul>
+            <p style="line-height: 1.8; color: #333; margin-bottom: 15px;">
+                This <strong>Fish It guide</strong> is regularly updated with the latest game mechanics, new fish additions, and meta strategies. Bookmark this page and check back for <strong>Fish It codes</strong>, event updates, and advanced farming techniques. Join our community of successful fish hunters who've caught Element Rod, maxed their collections, and dominated the leaderboards!
+            </p>
+            <p style="line-height: 1.8; color: #333;">
+                <strong>Keywords:</strong> fish it roblox, fishing simulator, roblox fishing game, how to get element rod, secret fish guide 2024, mythic fish farming, best enchants fish it, rod tier list, RNG calculator, fish it wiki alternative, fish it discord, legendary fish locations, gamepass rods review
+            </p>
+        </div>
+
+        <!-- Fish It Codes Section -->
+        <div id="codes" class="card" style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; text-align: center; margin-bottom: 25px;">🎁 Active Fish It Codes - December 2024</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.1em;">
+                Redeem these codes in-game for FREE rewards! Click code to copy.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                <div class="code-item">
+                    <div class="code-badge">🆕 NEW</div>
+                    <div class="code-text" onclick="copyCode('PURPLEMOON')">PURPLEMOON</div>
+                    <div class="code-reward">Exclusive Bait</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('EXPANSION')">EXPANSION</div>
+                    <div class="code-reward">2 Mutation I Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('1BILLION')">1BILLION</div>
+                    <div class="code-reward">Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('CRYSTALS')">CRYSTALS</div>
+                    <div class="code-reward">Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('BLAMETALON')">BLAMETALON</div>
+                    <div class="code-reward">Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('SORRY')">SORRY</div>
+                    <div class="code-reward">Exclusive Bait</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('TRAVEL')">TRAVEL</div>
+                    <div class="code-reward">Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('SHARKSSS')">SHARKSSS</div>
+                    <div class="code-reward">2 Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('WORMHYPE')">WORMHYPE</div>
+                    <div class="code-reward">Free Rewards</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('MEGA')">MEGA</div>
+                    <div class="code-reward">2 Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('ARMOR')">ARMOR</div>
+                    <div class="code-reward">Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('100ML')">100ML</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('MUTATE')">MUTATE</div>
+                    <div class="code-reward">Mutation Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('WOWSPINS')">WOWSPINS</div>
+                    <div class="code-reward">x2 Spins (New servers)</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('FREEBIES')">FREEBIES</div>
+                    <div class="code-reward">Spins</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('SORRYSPINS')">SORRYSPINS</div>
+                    <div class="code-reward">Spins</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('THEWHEEL')">THEWHEEL</div>
+                    <div class="code-reward">Spins</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('100M')">100M</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('LOST')">LOST</div>
+                    <div class="code-reward">2 Luck Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('EGGS')">EGGS</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('HUNTING')">HUNTING</div>
+                    <div class="code-reward">Mutation Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('TROPICAL')">TROPICAL</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('FISHING')">FISHING</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('BIGUPD')">BIGUPD</div>
+                    <div class="code-reward">2 Mutation Potions</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('VALENTINE')">VALENTINE</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('CONSOLE')">CONSOLE</div>
+                    <div class="code-reward">Luck Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-text" onclick="copyCode('LOBSTAH')">LOBSTAH</div>
+                    <div class="code-reward">Luck + Mutation Potion</div>
+                </div>
+                
+                <div class="code-item">
+                    <div class="code-badge">🎄 EVENT</div>
+                    <div class="code-text" onclick="copyCode('XMAS2024')">XMAS2024</div>
+                    <div class="code-reward">2 Coin Potions + 50 Candy Canes</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; text-align: center;">
+                <h3 style="color: white; margin-bottom: 15px;">📱 How to Redeem Fish It Codes</h3>
+                <ol style="text-align: left; max-width: 600px; margin: 0 auto; line-height: 2;">
+                    <li>Launch Fish It in Roblox</li>
+                    <li>Click the <strong>Menu</strong> button (top left)</li>
+                    <li>Click <strong>"Codes"</strong> button</li>
+                    <li>Enter the code (case-sensitive!)</li>
+                    <li>Click <strong>"Redeem"</strong> to claim rewards</li>
+                </ol>
+                <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.9;">
+                    ⚠️ Codes are case-sensitive! Copy exactly as shown. Some codes may expire without notice.
+                </p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="kofi-container">
+                <a href="https://ko-fi.com/tmsalmanda" target="_blank" class="kofi-button">
+                    <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi" class="kofi-icon">
+                    <span>Support Me on Ko-fi</span>
+                </a>
+                <p class="kofi-text">☕ Enjoying this calculator? Buy me a coffee to support development!</p>
+            </div>
+            <p class="creator">Created by <span class="creator-name">MONSAL</span></p>
+            <p class="footer-subtitle">Fish It RNG Calculator & Guide</p>
+        </footer>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+    <!-- AI Chat Modal (Ad-free) -->
+    <button id="open-ai-chat" aria-label="Open AI Chat" style="position:fixed; right:16px; bottom:86px; z-index:10001; background:linear-gradient(135deg,#6d86ff,#7a5cff); border:none; color:#fff; padding:12px 14px; border-radius:999px; font-weight:800; box-shadow:0 8px 30px rgba(0,0,0,.35);">💬 Ask AI</button>
+    <div id="ai-chat-modal" role="dialog" aria-hidden="true" style="display:none; position:fixed; z-index:10002; left:0; right:0; bottom:0; top:0; align-items:center; justify-content:center;">
+        <div class="card" style="max-width:920px; width:94%; height:86vh; display:flex; flex-direction:column; padding:12px; gap:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                <div style="display:flex; gap:8px; align-items:center;"><h3 style="margin:0;">AI Assistant (Ad-free)</h3><small style="color:var(--muted);">No in-chat ads. Public site ads are hidden while chat is open.</small></div>
+                <div style="display:flex; gap:8px; align-items:center;"><button id="ai-settings" class="btn-secondary">Settings</button><button id="close-ai-chat" class="btn-secondary">Close</button></div>
+            </div>
+            <div id="ai-chat-body" style="flex:1; overflow:auto; padding:8px; background:var(--surface-2); border-radius:12px; border:1px solid var(--border);">
+                <div id="ai-messages" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <input id="ai-input" placeholder="Ask tips, RNG, how to get secret fish, configs..." style="flex:1; padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:var(--surface-3); color:var(--text);">
+                <button id="ai-send" class="btn-calculate">Send</button>
+            </div>
+            <div id="ai-footer" style="display:flex; gap:8px; align-items:center; justify-content:space-between; font-size:12px; color:var(--muted);">
+                <div>AI Mode: <span id="ai-mode">Mock</span> • <a id="set-api-key" style="cursor:pointer; color:var(--primary);">Set API Key</a></div>
+                <div style="display:flex; gap:8px; align-items:center;"><button id="clear-ai-history" class="btn-secondary">Clear</button><button id="export-ai-history" class="btn-secondary">Export</button></div>
+            </div>
+        </div>
+    </div>
+    <!-- Feedback modal -->
+    <div id="feedbackModal" style="display:none; position:fixed; z-index:10001; left:0; top:0; right:0; bottom:0; align-items:center; justify-content:center;">
+        <div style="background:var(--surface-1); padding:20px; border-radius:12px; width:calc(100% - 32px); max-width:720px; margin: 40px auto; border: 1px solid var(--border);">
+            <h3 style="margin:0 0 8px; color:var(--text);">Send Feedback / Report a Bug</h3>
+            <p style="color:var(--muted); margin:0 0 8px;">Describe the issue or suggestion, include steps and results.</p>
+            <textarea id="feedbackText" style="width:100%; min-height:120px; border-radius:10px; padding:10px; background:var(--surface-2); color:var(--text); border:1px solid var(--border);"></textarea>
+            <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:10px;">
+                <button id="feedbackClose" class="btn-secondary">Cancel</button>
+                <button id="feedbackSend" class="btn-calculate">Send via Email</button>
+            </div>
+        </div>
+    </div>
+        <script>
+            // Back to top button
+            (function(){
+                const btn = document.createElement('button');
+                btn.id = 'backTop';
+                btn.textContent = '↑';
+                btn.setAttribute('aria-label','Back to top');
+                Object.assign(btn.style, {
+                    position:'fixed', right:'16px', bottom:'20px', width:'44px', height:'44px',
+                    borderRadius:'50%', border:'1px solid rgba(255,255,255,.2)',
+                    background:'linear-gradient(135deg, #6d86ff, #7a5cff)', color:'#fff',
+                    fontWeight:'900', cursor:'pointer', zIndex:'999', display:'none'
+                });
+                document.body.appendChild(btn);
+                window.addEventListener('scroll',()=>{ btn.style.display = window.scrollY>300?'block':'none'; });
+                btn.addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
+            })();
+        </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+    
+    <!-- Vercel Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    
+    <!-- Vercel Speed Insights -->
+    <script type="module">
+        import { injectSpeedInsights } from 'https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/index.mjs';
+        injectSpeedInsights();
+    </script>
+</body>
+</html>
